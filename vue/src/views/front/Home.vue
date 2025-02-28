@@ -30,6 +30,7 @@
     </div>
   </div>
     <div style="display: flex;margin-top: 20px;height: 300px">
+      //大图标推荐板块
       <div style="flex: 1;margin-right:10px;height: 270px;width: 0">
         <img :src="recommend.img" style="width: 100%;border-radius: 5px">
         <div style="margin-top: 5px;font-size: 15px" class="overflowShow">{{ recommend.name }}</div>
