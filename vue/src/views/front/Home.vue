@@ -41,34 +41,6 @@
             <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
             <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
           </el-col>
-          <el-col :span="6" style="margin-bottom: 35px">
-            <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-            <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-          </el-col>
-          <el-col :span="6" style="margin-bottom: 35px">
-          <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-          <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-        </el-col>
-          <el-col :span="6" style="margin-bottom: 35px">
-            <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-            <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-          </el-col>
-          <el-col :span="6" style="margin-bottom: 35px">
-            <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-            <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-          </el-col>
-          <el-col :span="6" style="margin-bottom: 35px">
-            <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-            <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-          </el-col>
-          <el-col :span="6" style="margin-bottom: 35px">
-            <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-            <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-          </el-col>
-          <el-col :span="6" style="margin-bottom: 35px">
-            <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-            <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-          </el-col>
         </el-row>
       </div>
     </div>
