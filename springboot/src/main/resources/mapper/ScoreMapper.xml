@@ -2,16 +2,16 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.CourseMapper">
+<mapper namespace="com.example.mapper.ScoreMapper">
 
     <sql id="Base_Column_List">
-        id,img,name,content,type,price,video,file,discount,recommend,time
+        id,img,name,content,type,price,video,file,recommend,time
     </sql>
 
-    <select id="selectAll" resultType="com.example.entity.Course">
+    <select id="selectAll" resultType="com.example.entity.Score">
         select
         <include refid="Base_Column_List" />
-        from course
+        from score
         <where>
             <if test="id != null"> and id= #{id}</if>
             <if test="recommend != null"> and recommend= #{recommend}</if>
@@ -20,21 +20,21 @@
         order by id desc
     </select>
 
-    <select id="selectById" resultType="com.example.entity.Course">
+    <select id="selectById" resultType="com.example.entity.Score">
         select
         <include refid="Base_Column_List" />
-        from course
+        from score
         where id = #{id}
     </select>
 
     <delete id="deleteById">
-        delete from course
+        delete from score
         where  id = #{id}
     </delete>
 
 <!--    id,img,name,content,type,price,video,file,.discount,recommend-->
-    <insert id="insert" parameterType="com.example.entity.Course" useGeneratedKeys="true">
-        insert into course
+    <insert id="insert" parameterType="com.example.entity.Score" useGeneratedKeys="true">
+        insert into score
         <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="id != null">id,</if>
                 <if test="img != null">img,</if>
@@ -44,7 +44,6 @@
                 <if test="price != null">price,</if>
                 <if test="video != null">video,</if>
                 <if test="file != null">file,</if>
-                <if test="discount != null">discount,</if>
                 <if test="recommend != null">recommend,</if>
                 <if test="time != null">time,</if>
         </trim>
@@ -57,14 +56,13 @@
                 <if test="price != null">#{price},</if>
                 <if test="video != null">#{video},</if>
                 <if test="file != null">#{file},</if>
-                <if test="discount != null">#{discount},</if>
                 <if test="recommend != null">#{recommend},</if>
                 <if test="time != null">#{time},</if>
         </trim>
     </insert>
 
-    <update id="updateById" parameterType="com.example.entity.Course">
-        update course
+    <update id="updateById" parameterType="com.example.entity.Score">
+        update score
         <set>
             <if test="img != null">
                 img = #{img},
@@ -87,9 +85,6 @@
             <if test="file != null">
                 file = #{file},
             </if>
-            <if test="discount != null">
-                discount = #{discount},
-        </if>
             <if test="recommend != null">
                 recommend = #{recommend},
             </if>

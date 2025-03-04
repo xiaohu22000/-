@@ -64,6 +64,12 @@ public class CourseController {
         return Result.success(course);
     }
 
+    @GetMapping("/selectTop8")
+    public Result selectTop8(){
+        List<Course> list = courseService.selectTop8();
+        return Result.success(list);
+    }
+
     /**
      * 查询所有
      */
@@ -73,10 +79,16 @@ public class CourseController {
         return Result.success(list);
     }
 
+//    @GetMapping("/getRecommend")
+//    public Result getRecommend(){
+//        Course course=courseService.getRecommend();
+//        return Result.success(course);
+//    }
+
     @GetMapping("/getRecommend")
-    public Result getRecommend(){
-        Course course=courseService.getRecommend();
-        return Result.success(course);
+    public Result getRecommend() {
+        List<Course> courseList = courseService.getRecommendList(); // 假设 service 层有获取推荐课程列表的方法
+        return Result.success(courseList);
     }
 
     /**
@@ -90,4 +102,25 @@ public class CourseController {
         return Result.success(page);
     }
 
+    @GetMapping("/getRecommendVideo")
+    public Result getRecommendVideo(){
+        List<Course> courseList = courseService.getRecommendVideo(); // 假设 service 层有获取推荐课程列表的方法
+        return Result.success(courseList);
+    }
+
+    @GetMapping("/selectTop8Video")
+    public Result selectTop8Video(){
+        List <Course> list=courseService.selectTop8Video();
+        return Result.success(list);
+    }
+    @GetMapping("/getRecommendText")
+    public Result getRecommendText(){
+        List<Course> courseList = courseService.getRecommendText(); // 假设 service 层有获取推荐课程列表的方法
+        return Result.success(courseList);
+    }
+    @GetMapping("/selectTop8Text")
+    public Result selectTop8Text(){
+        List <Course> list=courseService.selectTop8Text();
+        return Result.success(list);
+    }
 }

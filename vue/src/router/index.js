@@ -23,7 +23,8 @@ const routes = [
       { path: 'adminPerson', name: 'AdminPerson', meta: { name: '个人信息' }, component: () => import('../views/manager/AdminPerson') },
       { path: 'password', name: 'Password', meta: { name: '修改密码' }, component: () => import('../views/manager/Password') },
       { path: 'notice', name: 'Notice', meta: { name: '公告信息' }, component: () => import('../views/manager/Notice') },
-      { path: 'course', name: 'Course', meta: { name: '公告信息' }, component: () => import('../views/manager/Course') },
+      { path: 'course', name: 'Course', meta: { name: '课程信息' }, component: () => import('../views/manager/Course') },
+      { path: 'score', name: 'Score', meta: { name: '积分专区' }, component: () => import('../views/manager/Score') },
     ]
   },
   {
@@ -32,6 +33,10 @@ const routes = [
     component: () => import('../views/Front.vue'),
     children: [
       { path: 'home', name: 'Home', meta: { name: '系统首页' }, component: () => import('../views/front/Home') },
+      { path: 'course', name: 'Course', meta: { name: '全部课程' }, component: () => import('../views/front/Course') },
+      { path: 'courseDetail', name: 'CourseDetail', meta: { name: '课程详情' }, component: () => import('../views/front/CourseDetail') },
+      { path: 'scoreDetail', name: 'ScoreDetail', meta: { name: '积分详情' }, component: () => import('../views/front/ScoreDetail') },
+      { path: 'score', name: 'Score', meta: { name: '全部课程' }, component: () => import('../views/front/Score') },
       { path: 'person', name: 'Person', meta: { name: '个人信息' }, component: () => import('../views/front/Person') },
     ]
   },

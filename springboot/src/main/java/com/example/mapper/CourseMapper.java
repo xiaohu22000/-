@@ -37,4 +37,22 @@ public interface CourseMapper {
 
     @Select("select * from course where recommend = '是'")
     Course getRecommend();
+
+    @Select("select * from course where recommend = '是'") // 假设数据库中有 is_recommend 字段表示是否推荐
+    List<Course> getRecommendList();
+
+    @Select("select * from course where recommend = '否' order by id desc limit 8")
+    List<Course> selectTop8();
+
+    @Select("select * from course where recommend ='是' and type ='VIDEO'")
+    List<Course> getRecommendVideo();
+
+    @Select("select * from course where recommend='否' and type='VIDEO'")
+    List<Course> selectTop8Video();
+
+    @Select("select * from course where recommend ='是' and type ='Text'")
+    List<Course> getRecommendText();
+
+    @Select("select * from course where recommend='否' and type='Text'")
+    List<Course> selectTop8Text();
 }

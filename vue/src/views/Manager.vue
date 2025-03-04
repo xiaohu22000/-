@@ -44,6 +44,7 @@
             </template>
             <el-menu-item index="/notice">公告信息</el-menu-item>
             <el-menu-item index="/course">课程信息</el-menu-item>
+            <el-menu-item index="/score">积分专区</el-menu-item>
           </el-submenu>
 
           <el-submenu index="user">

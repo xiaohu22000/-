@@ -3,9 +3,9 @@ package com.example.entity;
 import java.io.Serializable;
 
 /**
- * 课程信息表
+ * 积分专区表
 */
-public class Course implements Serializable {
+public class Score implements Serializable {
 
     private Integer id;
     private String img;
@@ -15,7 +15,7 @@ public class Course implements Serializable {
 
     private String time;
     private String type;
-    private Double price;
+    private Integer price;
     public String getTime() {
         return time;
     }
@@ -64,11 +64,11 @@ public class Course implements Serializable {
         this.type = type;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -88,14 +88,6 @@ public class Course implements Serializable {
         this.file = file;
     }
 
-    public Double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Double discount) {
-        this.discount = discount;
-    }
-
     public String getRecommend() {
         return recommend;
     }
@@ -106,6 +98,5 @@ public class Course implements Serializable {
 
     private String video;
     private String file;
-    private Double discount;
     private String recommend;
 }

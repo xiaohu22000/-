@@ -5,7 +5,7 @@
 <mapper namespace="com.example.mapper.CourseMapper">
 
     <sql id="Base_Column_List">
-        id,img,name,content,type,price,video,file,discount,recommend
+        id,img,name,content,type,price,video,file,discount,recommend,time
     </sql>
 
     <select id="selectAll" resultType="com.example.entity.Course">
@@ -14,6 +14,7 @@
         from course
         <where>
             <if test="id != null"> and id= #{id}</if>
+            <if test="recommend != null"> and recommend= #{recommend}</if>
             <if test="name != null"> and name like concat('%', #{name}, '%')</if>
         </where>
         order by id desc
@@ -45,6 +46,7 @@
                 <if test="file != null">file,</if>
                 <if test="discount != null">discount,</if>
                 <if test="recommend != null">recommend,</if>
+                <if test="time != null">time,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="id != null">#{id},</if>
@@ -57,6 +59,7 @@
                 <if test="file != null">#{file},</if>
                 <if test="discount != null">#{discount},</if>
                 <if test="recommend != null">#{recommend},</if>
+                <if test="time != null">#{time},</if>
         </trim>
     </insert>
 
@@ -89,6 +92,9 @@
         </if>
             <if test="recommend != null">
                 recommend = #{recommend},
+            </if>
+            <if test="time != null">
+                time = #{time},
             </if>
         </set>
         where id = #{id}

@@ -27,14 +27,13 @@
         <el-table-column prop="name" label="课程名称" show-overflow-tooltip></el-table-column>
         <el-table-column prop="content" label="内容" show-overflow-tooltip></el-table-column>
         <el-table-column prop="type" label="课程类型"></el-table-column>
-        <el-table-column prop="price" label="课程价格"></el-table-column>
         <el-table-column prop="video" label="课程视频" show-overflow-tooltip>
           <template v-slot="scope">
             <el-button type="warning" size="mini" @click="down(scope.row.video)" v-if="scope.row.type==='VIDEO'">点击下载</el-button>
           </template>
         </el-table-column>
         <el-table-column prop="file" label="课程资料" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="discount" label="课程折扣"></el-table-column>
+        <el-table-column prop="score" label="课程积分"></el-table-column>
         <el-table-column prop="recommend" label="是否推荐"></el-table-column>
 
         <el-table-column label="操作" width="180" align="center">
@@ -88,8 +87,8 @@
             <el-option label="否" value="否"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item prop="price" label="课程价格">
-          <el-input v-model="form.price" autocomplete="off" placeholder="请输入价格(0表示公开课)"></el-input>
+        <el-form-item prop="price" label="所需积分">
+          <el-input v-model="form.price" autocomplete="off" placeholder="请输入积分(0表示公开分享)"></el-input>
         </el-form-item>
         <el-form-item label="课程视频">
           <el-upload
@@ -105,12 +104,8 @@
         <el-form-item prop="file" label="资料链接">
           <el-input v-model="form.file" autocomplete="off" placeholder="资料链接"></el-input>
         </el-form-item>
-        <el-form-item prop="discount" label="课程折扣">
-          <el-input v-model="form.discount" autocomplete="off" placeholder="课程折扣（例如8折即0.8，不打折请填1）"></el-input>
-        </el-form-item>
         <el-form-item prop="content" label="课程介绍">
           <div id="editor"></div>
-
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -126,7 +121,7 @@
 <script>
 import E from 'wangeditor'
 export default {
-  name: "Course",
+  name: "Score",
   data() {
     return {
       tableData: [],  // 所有的数据
@@ -187,7 +182,7 @@ export default {
       this.$refs.formRef.validate((valid) => {
         if (valid) {
           this.$request({
-            url: this.form.id ? '/course/update' : '/course/add',
+            url: this.form.id ? '/score/update' : '/score/add',
             method: this.form.id ? 'PUT' : 'POST',
             data: this.form
           }).then(res => {
@@ -204,7 +199,7 @@ export default {
     },
     del(id) {   // 单个删除
       this.$confirm('您确定删除吗？', '确认删除', {type: "warning"}).then(response => {
-        this.$request.delete('/course/delete/' + id).then(res => {
+        this.$request.delete('/score/delete/' + id).then(res => {
           if (res.code === '200') {   // 表示操作成功
             this.$message.success('操作成功')
             this.load(1)
@@ -224,7 +219,7 @@ export default {
         return
       }
       this.$confirm('您确定批量删除这些数据吗？', '确认删除', {type: "warning"}).then(response => {
-        this.$request.delete('/course/delete/batch', {data: this.ids}).then(res => {
+        this.$request.delete('/score/delete/batch', {data: this.ids}).then(res => {
           if (res.code === '200') {   // 表示操作成功
             this.$message.success('操作成功')
             this.load(1)
@@ -237,7 +232,7 @@ export default {
     },
     load(pageNum) {  // 分页查询
       if (pageNum) this.pageNum = pageNum
-      this.$request.get('/course/selectPage', {
+      this.$request.get('/score/selectPage', {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,

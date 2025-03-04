@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +26,7 @@ public class CourseService {
      * 新增
      */
     public void add(Course course) {
+        course.setTime(DateUtil.format(new Date(),"yyyy-MM-dd"));
         courseMapper.insert(course);
     }
 
@@ -76,5 +78,30 @@ public class CourseService {
 
     public Course getRecommend() {
         return courseMapper.getRecommend();
+    }
+
+
+    public List<Course> getRecommendList() {
+        return  courseMapper.getRecommendList();
+    }
+
+    public List<Course> selectTop8() {
+        return courseMapper.selectTop8();
+    }
+
+    public List<Course> getRecommendVideo() {
+        return courseMapper.getRecommendVideo();
+    }
+
+    public List<Course> selectTop8Video() {
+        return courseMapper.selectTop8Video();
+    }
+
+    public List<Course> getRecommendText() {
+        return courseMapper.getRecommendText();
+    }
+
+    public List<Course> selectTop8Text() {
+        return courseMapper.selectTop8Text();
     }
 }
