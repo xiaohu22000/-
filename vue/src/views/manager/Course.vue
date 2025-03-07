@@ -119,7 +119,9 @@
       </div>
     </el-dialog>
 
-
+    <el-dialog title="课程内容" :visible.syc="editorVisible" width="50%" :close-on-click-modal="false" destroy-on-close>
+      <div v-html="viewData" class="w-e-text w-e-text-container"></div>
+    </el-dialog>
   </div>
 </template>
 
@@ -137,7 +139,9 @@ export default {
       recommend:null,
       editor: null,
       fromVisible: false,
+      editorVisible:false,
       form: {},
+      viewData:null,
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
       rules: {
         name: [
@@ -186,6 +190,7 @@ export default {
     save() {   // 保存按钮触发的逻辑  它会触发新增或者更新
       this.$refs.formRef.validate((valid) => {
         if (valid) {
+          this.form.content=this.editor.txt.html()
           this.$request({
             url: this.form.id ? '/course/update' : '/course/add',
             method: this.form.id ? 'PUT' : 'POST',
