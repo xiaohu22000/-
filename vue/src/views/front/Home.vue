@@ -34,7 +34,7 @@
         <div style="flex: 1;margin-right:10px;height: 270px;width: 0">
           <el-carousel height="280px" :interval="3000" arrow="">
             <el-carousel-item v-for="(recommendItem, index) in recommendList" :key="index">
-              <img :src="recommendItem.img" style="width: 100%;border-radius: 5px">
+              <img :src="recommendItem.img" style="width: 100%;border-radius: 5px;cursor: pointer" @click="navTo(recommendItem.id)">
               <div style="font-size: 15px" class="overflowShow" >{{ recommendItem.name }}</div>
             </el-carousel-item>
           </el-carousel>
@@ -43,14 +43,14 @@
         <div style="flex: 2;margin-left:10px">
           <el-row :gutter="20">
             <el-col :span="6" style="margin-bottom: 35px" v-for="item in rightdata">
-              <img :src="item.img" alt="" style="width: 100%;height: 100px;border-radius: 5px">
+              <img :src="item.img" alt="" style="width: 100%;height: 100px;border-radius: 5px;cursor: pointer" @click="navTo(item.id)">
               <div style="color: #333333;margin-top: 10px" class="overflowShow" >{{ item.name }}</div>
             </el-col>
           </el-row>
         </div>
       </div>
 
-      <div style="display: flex;margin-top: 50px ">
+      <div style="display: flex;margin-top: 10px ">
         <div style="flex: 1">
           <span style="font-size: 24px;color: #333333; margin-right: 50px">在线资源</span>
         </div>
@@ -58,43 +58,20 @@
       <div style="display: flex;margin-top: 20px;height: 300px">
         <div style="flex: 2;margin-left:10px">
           <el-row :gutter="20">
-            <el-col :span="6" style="margin-bottom: 25px">
-              <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-              <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-            </el-col>
-            <el-col :span="6" style="margin-bottom: 25px">
-              <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-              <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-            </el-col>
-            <el-col :span="6" style="margin-bottom: 25px">
-              <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-              <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-            </el-col>
-            <el-col :span="6" style="margin-bottom: 25px">
-              <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-              <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-            </el-col>
-            <el-col :span="6" style="margin-bottom: 25px">
-              <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-              <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-            </el-col>
-            <el-col :span="6" style="margin-bottom:25px">
-              <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-              <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-            </el-col>
-            <el-col :span="6" style="margin-bottom: 25px">
-              <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-              <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
-            </el-col>
-            <el-col :span="6" style="margin-bottom: 25px">
-              <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" alt="" style="width: 100%;height: 100px;border-radius: 5px">
-              <div style="color: #333333;margin-top: 10px" class="overflowShow" >JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
+
+            <el-col :span="6" style="margin-bottom: 35px" v-for="item in leftData">
+              <img :src="item.img" alt="" style="width: 100%;height: 100px;border-radius: 5px;cursor: pointer" @click="navToinformation(item.id)">
+              <div style="color: #333333;margin-top: 10px" class="overflowShow" >{{ item.name }}</div>
             </el-col>
           </el-row>
         </div>
         <div style="flex: 1;margin-left:10px;height: 270px;width: 0">
-          <img src="@/assets/imgs/JavaWeb实战学习课程.jpeg" style="width: 100%;border-radius: 5px">
-          <div style="margin-top: 5px;font-size: 15px" class="overflowShow">JavaWeb实战学习课程,基于Spring Boot，从网站搭建开发</div>
+          <el-carousel height="280px" :interval="3000" arrow="">
+            <el-carousel-item v-for="(recommenditem, index) in fileRecommend" :key="index">
+              <img :src="recommenditem.img" style="width: 100%;border-radius: 5px;cursor: pointer" @click="navToinformation(recommenditem.id)">
+              <div style="font-size: 15px" class="overflowShow" >{{ recommenditem.name }}</div>
+            </el-carousel-item>
+          </el-carousel>
         </div>
       </div>
 
@@ -118,15 +95,32 @@ export default {
       ],
       type:'',
       recommendList:[],
-      rightdata:[]
+      rightdata:[],
+      fileRecommend:[],
+      leftData:[]
     }
   },
   mounted() {
     this.loadRecommend()
     this.loadRightdata()
+    this.getInformation()
+    this.getLeftdata()
   },
   // methods：本页面所有的点击事件或者其他函数定义区
   methods: {
+    navTo(id) {
+      if (this.type === 'SCORE'){
+        //往积分课程详情页面跳
+        location.href='/front/scoreDetail?id='+id
+      }else {
+        //往课程详情跳
+        location.href='/front/courseDetail?id='+id
+      }
+    },
+    navToinformation(id){
+        location.href='/front/informationDetail?id='+id
+      },
+
     initValue(type){
       this.type=type;
       this.getData()
@@ -204,6 +198,27 @@ export default {
         this.$message.error(res.msg)
       }
     })
+  },
+
+  getInformation() {
+    // 1.获取推荐的那个资料
+    this.$request.get('/information/getRecommend').then(res=>{
+      if (res.code ==='200'){
+        this.fileRecommend=res.data
+      }else {
+        this.$message.error(res.msg)
+      }
+    })
+  },
+  getLeftdata() {
+    this.$request.get('/information/getLeftdata').then(res=>{
+      if (res.code ==='200'){
+        this.leftData=res.data
+      }else {
+        this.$message.error(res.msg)
+      }
+    })
   }
-}}
+  }
+}
 </script>

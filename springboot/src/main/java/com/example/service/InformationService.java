@@ -76,4 +76,12 @@ public class InformationService {
         return PageInfo.of(list);
     }
 
+    public List<Information> getRecommendList() {
+        return informationMapper.getRecommendList();
+    }
+
+
+    public List<Information> getLeftdata() {
+        return informationMapper.getLeftdata();
+    }
 }

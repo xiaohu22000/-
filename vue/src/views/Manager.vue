@@ -4,7 +4,7 @@
     <div class="manager-header">
       <div class="manager-header-left">
         <img src="@/assets/imgs/logo.png" />
-        <div class="title">编程学习平台</div>
+        <div class="title" @click="gofront()">编程学习平台</div>
       </div>
 
       <div class="manager-header-center">
@@ -92,6 +92,9 @@ export default {
     logout() {
       localStorage.removeItem('xm-user')
       this.$router.push('/login')
+    },
+    gofront(){
+      this.$router.push('/front/home')
     }
   }
 }

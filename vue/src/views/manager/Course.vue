@@ -25,7 +25,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="name" label="课程名称" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="content" label="内容" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="content" label="内容" show-overflow-tooltip>
+          <template v-slot="scope">
+            <el-button type="success" size="mini" @click="viewDataInit(scope.row.content)">点击查看</el-button>
+          </template>
+        </el-table-column>
         <el-table-column prop="type" label="课程类型"></el-table-column>
         <el-table-column prop="price" label="课程价格"></el-table-column>
         <el-table-column prop="video" label="课程视频" show-overflow-tooltip>
@@ -176,6 +180,10 @@ export default {
           this.editor.txt.html(content)
         })
       })
+    },
+    viewDataInit(data){
+      this.viewData=data
+      this.editorVisible=true
     },
     handleAdd() {   // 新增数据
       this.form = {}  // 新增数据的时候清空数据

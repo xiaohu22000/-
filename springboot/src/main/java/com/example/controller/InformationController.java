@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.common.Result;
+import com.example.entity.Course;
 import com.example.entity.Information;
 import com.example.service.InformationService;
 import com.github.pagehelper.PageInfo;
@@ -84,4 +85,15 @@ public class InformationController {
         return Result.success(page);
     }
 
+    @GetMapping("/getRecommend")
+    public Result getRecommend(){
+        List<Information> informationList = informationService.getRecommendList(); // 假设 service 层有获取推荐课程列表的方法
+        return Result.success(informationList);
+    }
+
+    @GetMapping("/getLeftdata")
+    public Result getLeftdata(){
+        List<Information> list = informationService.getLeftdata();
+        return Result.success(list);
+    }
 }

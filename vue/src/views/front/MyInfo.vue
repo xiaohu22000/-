@@ -175,6 +175,8 @@ export default {
     save() {   // 保存按钮触发的逻辑  它会触发新增或者更新
       this.$refs.formRef.validate((valid) => {
         if (valid) {
+          this.form.status='待审核'
+          this.form.descr=''
           this.form.content=this.editor.txt.html()
           this.$request({
             url: this.form.id ? '/information/update' : '/information/add',
@@ -200,7 +202,6 @@ export default {
     handleAdd() {   // 新增数据
       this.form = {
         userId:this.user.id,
-        status:'待审核'
       }  // 新增数据的时候清空数据
       this.fromVisible = true   // 打开弹窗
       this.initWangeditor('')

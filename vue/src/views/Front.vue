@@ -13,6 +13,7 @@
 						<el-menu-item index="/front/home">首页</el-menu-item>
 						<el-menu-item index="/front/course">全部课程</el-menu-item>
 						<el-menu-item index="/front/score">积分专区</el-menu-item>
+						<el-menu-item index="/front/information">海量资源</el-menu-item>
 						<el-menu-item index="/front/person">个人中心</el-menu-item>
           </el-menu>
         </div>

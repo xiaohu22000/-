@@ -1,6 +1,7 @@
 package com.example.mapper;
 
 import com.example.entity.Information;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -34,4 +35,9 @@ public interface InformationMapper {
     */
     List<Information> selectAll(Information information);
 
+    @Select("select * from information where recommend ='是' and status='审核通过'")
+    List<Information> getRecommendList();
+
+    @Select("select * from information where recommend ='否' and status='审核通过'")
+    List<Information> getLeftdata();
 }
