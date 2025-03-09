@@ -54,6 +54,11 @@ public class SigninController {
         signinService.updateById(signin);
         return Result.success();
     }
+    @GetMapping("/selectByUserId")
+    public Result selectByUserId(@RequestParam Integer id){
+        Signin signin=signinService.selectByUserId(id);
+        return Result.success(signin);
+    }
 
     /**
      * 根据ID查询

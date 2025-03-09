@@ -1,6 +1,7 @@
 package com.example.mapper;
 
 import com.example.entity.Signin;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -34,4 +35,6 @@ public interface SigninMapper {
     */
     List<Signin> selectAll(Signin signin);
 
+    @Select("select * from signin where user_id= #{userId}")
+    Signin selectByUserId(Integer userId);
 }

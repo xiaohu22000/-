@@ -24,9 +24,9 @@
           <el-button type="warning" @click="initValue('TEXT')">图文课程</el-button>
         </div>
         <div style="width: 300px">
-          <el-button type="info">签到</el-button>
+          <el-button type="info" @click="signin">签到</el-button>
           <span style="margin-left: 30px;color:#12b127;font-weight: 550">上次签到时间：</span>
-          <span style="color: #666666">21点15分</span>
+          <span style="color: #666666">{{ signInData.time }}</span>
         </div>
       </div>
       <div style="display: flex;margin-top: 20px;height: 300px">
@@ -87,6 +87,7 @@ export default {
 
   data() {
     return {
+      user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
       carouselData:[
         require('@/assets/imgs/lun-1.jpg'),
         require('@/assets/imgs/lun-2.jpg'),
@@ -97,17 +98,42 @@ export default {
       recommendList:[],
       rightdata:[],
       fileRecommend:[],
-      leftData:[]
+      leftData:[],
+      signInData:{}
     }
   },
   mounted() {
     this.loadRecommend()
     this.loadRightdata()
+    this.getSign()
     this.getInformation()
     this.getLeftdata()
   },
   // methods：本页面所有的点击事件或者其他函数定义区
   methods: {
+    getSign(){
+      this.$request.get('/signin/selectByUserId?id=' + this.user.id).then(res=>{
+        if(res.code ==='200'){
+          this.signInData=res.data
+        }else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
+    signin(){
+      let data={
+        userId:this.user.id
+      }
+      this.$request.post('/signin/add',data).then(res=>{
+        if (res.code === '200'){
+        this.$message.success('签到成功，恭喜你获得10个积分')
+        this.getSign()
+        }else {
+          this.$message.error(res.msg)
+        }
+      }
+      )
+    },
     navTo(id) {
       if (this.type === 'SCORE'){
         //往积分课程详情页面跳
