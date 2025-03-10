@@ -25,7 +25,7 @@
         </div>
         <div style="width: 300px">
           <el-button type="info" @click="signin">签到</el-button>
-          <span style="margin-left: 30px;color:#12b127;font-weight: 550">上次签到时间：</span>
+          <span style="margin-left: 30px;color:#12b127;font-weight: 550">上次签到：</span>
           <span style="color: #666666">{{ signInData.time }}</span>
         </div>
       </div>

@@ -1,9 +1,12 @@
 package com.example.service;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.example.common.enums.ResultCodeEnum;
 import com.example.entity.Account;
 import com.example.entity.Signin;
 import com.example.entity.User;
+import com.example.exception.CustomException;
 import com.example.mapper.SigninMapper;
 import com.example.mapper.UserMapper;
 import com.example.utils.TokenUtils;
@@ -30,13 +33,32 @@ public class SigninService {
      * 新增
      */
     public void add(Signin signin) {
-        signin.setTime(DateUtil.now());
-        signin.setDay(DateUtil.format(new Date(),"yyyy-MM-dd"));
-        signinMapper.insert(signin);
-        //签到成功后，领取对应积分
-        User user=userMapper.selectById(signin.getUserId());
-        user.setScore(user.getScore()+ 10 );
-        userMapper.updateById(user);
+        //先获取今天的日期
+        String day=DateUtil.format(new Date(),"yyyy-MM-dd");
+
+        //检查用户当天是否签到
+        Signin dbsignin= signinMapper.selectByUserIdAndDay(signin.getUserId(),day);
+        if (ObjectUtil.isNotEmpty(dbsignin)){
+            //说明签到过了，这时候只需要更新一下该条记录的最新数据
+            throw new CustomException(ResultCodeEnum.SIGNIN_ALREAD_ERROR);
+        }
+            //查询用户有没有签到记录
+            Signin signTmp=signinMapper.selectByUserId(signin.getUserId());
+
+            if (ObjectUtil.isNotEmpty(signTmp)) {
+                //这个时候要把签到数据更新到当前时间和当前日期
+                signTmp.setTime(DateUtil.now());
+                signTmp.setDay(day);
+                signinMapper.updateById(signTmp);
+            }else {
+                signin.setTime(DateUtil.now());
+                signin.setDay(day);
+                signinMapper.insert(signin);
+            }
+            //签到成功后，领取对应积分
+            User user=userMapper.selectById(signin.getUserId());
+            user.setScore(user.getScore()+ 10 );
+            userMapper.updateById(user);
     }
 
     /**

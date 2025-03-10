@@ -1,6 +1,7 @@
 package com.example.mapper;
 
 import com.example.entity.Signin;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -37,4 +38,7 @@ public interface SigninMapper {
 
     @Select("select * from signin where user_id= #{userId}")
     Signin selectByUserId(Integer userId);
+
+    @Select("select * from signin where user_id= #{userId} and day=#{day}")
+    Signin selectByUserIdAndDay(@Param("userId") Integer userId,@Param("day") String day);
 }
