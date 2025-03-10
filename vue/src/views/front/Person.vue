@@ -3,6 +3,7 @@
     <el-card style="width: 50%; margin: 30px auto">
       <div style="text-align: right; margin-bottom: 20px">
         <el-button type="primary" @click="updatePassword">修改密码</el-button>
+        <el-button type="warning" @click="initRecharge">充 值</el-button>
       </div>
       <el-form :model="user" label-width="80px" style="padding-right: 20px">
         <div style="margin: 15px; text-align: center">
@@ -42,6 +43,7 @@
         </div>
       </el-form>
     </el-card>
+
     <el-dialog title="修改密码" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false" destroy-on-close>
       <el-form :model="user" label-width="80px" style="padding-right: 20px" :rules="rules" ref="formRef">
         <el-form-item label="原始密码" prop="password">
@@ -57,6 +59,25 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="fromVisible = false">取 消</el-button>
         <el-button type="primary" @click="save">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="个人充值" :visible.sync="rechargeVisible" width="40%" :close-on-click-modal="false" destroy-on-close>
+      <el-form label-width="80px" style="padding-right: 20px" >
+        <el-form-item label="充值说明" >
+          <span style="color: red">充值一次满500,可成为会员</span>
+        </el-form-item>
+        <el-form-item label="充值金额" >
+          <el-input  v-model="account" placeholder="请输入充值金额"></el-input>
+        </el-form-item>
+        <el-form-item label="支付方式">
+          <el-radio v-model="type"  label="支付宝">支付宝</el-radio>
+          <el-radio v-model="type" label="微信">微信</el-radio>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="rechargeVisible = false">取 消</el-button>
+        <el-button type="primary" @click="recharge">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -77,7 +98,9 @@ export default {
     return {
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
       dialogVisible: false,
-
+      rechargeVisible:false,
+      account:null,
+      type:'支付宝',
       rules: {
         password: [
           { required: true, message: '请输入原始密码', trigger: 'blur' },
@@ -92,9 +115,35 @@ export default {
     }
   },
   created() {
-
+    this.loadPerson()
   },
   methods: {
+    initRecharge(){
+      this.account=100
+      this.rechargeVisible=true
+    },
+    recharge(){
+      this.$request.get('/user/recharge?account='+this.account).then(res=>{
+        if (res.code ==='200'){
+          this.$message.success('充值成功')
+          this.loadPerson()
+          this.rechargeVisible=false
+        }else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
+    loadPerson() {
+      this.$request.get('/user/selectById/'+this.user.id).then(res=>{
+        if (res.code ==='200'){
+          this.user=res.data
+          localStorage.setItem('xm-user',JSON.stringify(this.user))
+        }else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
+
     update() {
       // 保存当前的用户信息到数据库
       this.$request.put('/user/update', this.user).then(res => {
@@ -133,8 +182,9 @@ export default {
           })
         }
       })
-    }
-  }
+    },
+
+}
 }
 </script>
 

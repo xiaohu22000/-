@@ -4,6 +4,7 @@ import com.example.common.Result;
 import com.example.entity.User;
 import com.example.service.UserService;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -64,6 +65,11 @@ public class UserController {
                              ){
         PageInfo<User> page=userService.selectPage(user,pageNum,pageSize);
         return Result.success(page);
+    }
 
+    @GetMapping("/recharge")
+    public Result recharge(@RequestParam Double account){
+        userService.recharge(account);
+        return Result.success();
     }
 }

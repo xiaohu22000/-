@@ -52,7 +52,12 @@ public class UserService {
     }
 
     public User selectById(Integer id) {
-        return userMapper.selectById(id);
+        User user= userMapper.selectById(id);
+        // 生成token
+        String tokenData = user.getId() + "-" + RoleEnum.USER.name();
+        String token = TokenUtils.createToken(tokenData, user.getPassword());
+        user.setToken(token);
+        return user;
     }
 
     public void updateById(User user) {
@@ -109,5 +114,17 @@ public class UserService {
         }
         dbUser.setPassword(account.getNewPassword());
         userMapper.updateById(dbUser);
+    }
+
+    public void recharge(Double account) {
+        Account currentUser=TokenUtils.getCurrentUser();
+        User user= userMapper.selectById(currentUser.getId());
+
+        user.setAccount(user.getAccount() + account);
+        //是否一次性充值500
+        if (account >= 500){
+            user.setMember(MemberEnum.Yes.info);
+        }
+        userMapper.updateById(user);
     }
 }
