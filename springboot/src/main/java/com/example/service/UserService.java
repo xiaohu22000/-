@@ -118,11 +118,11 @@ public class UserService {
 
     public void recharge(Double account) {
         Account currentUser=TokenUtils.getCurrentUser();
-        User user= userMapper.selectById(currentUser.getId());
+        User user=userMapper.selectById(currentUser.getId());
 
         user.setAccount(user.getAccount() + account);
-        //是否一次性充值500
-        if (account >= 500){
+
+        if (account >=500){
             user.setMember(MemberEnum.Yes.info);
         }
         userMapper.updateById(user);

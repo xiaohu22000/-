@@ -123,8 +123,8 @@ export default {
       this.rechargeVisible=true
     },
     recharge(){
-      this.$request.get('/user/recharge?account='+this.account).then(res=>{
-        if (res.code ==='200'){
+      this.$request.get('/user/recharge?account=' + this.account).then(res=>{
+        if (res.code === '200'){
           this.$message.success('充值成功')
           this.loadPerson()
           this.rechargeVisible=false

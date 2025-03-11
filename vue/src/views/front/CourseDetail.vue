@@ -20,7 +20,7 @@
     </div>
     <div e-else>
       <span style="color: #dd2121;margin-right: 20px">该课程为付费课程，购买后可解锁</span>
-      <el-button type="warning" size="mini">购买课程</el-button>
+      <el-button type="warning" size="mini" @click="buy">购买课程</el-button>
     </div>
   </div>
 <!--  课程介绍区域-->
@@ -58,7 +58,22 @@ export default {
           this.$message.error(res.msg)
         }
       })
-    }
+    },
+    buy(){
+      let data={
+        courseId:this.courseId,
+        userId:this.user.id
+      }
+      this.$request.post('/orders/add',data).then(res=>{
+        if (res.code === '200'){
+          this.$message.success('购买成功，已解锁课程')
+          this.loadCourse()
+        }else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
+
 }}
 </script>
 

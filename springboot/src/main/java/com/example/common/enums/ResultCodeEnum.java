@@ -15,6 +15,7 @@ public enum ResultCodeEnum {
     USER_NOT_EXIST_ERROR("5004", "用户不存在"),
     PARAM_PASSWORD_ERROR("5005", "原密码输入错误"),
     SIGNIN_ALREAD_ERROR("5006", "您今天已经签到了"),
+    ACCOUNT_LOWER_ERROR("5007", "您余额不足"),
     ;
 
     public String code;
