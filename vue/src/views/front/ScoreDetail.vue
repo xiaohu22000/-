@@ -13,13 +13,13 @@
 <!--  课程保密区域-->
   <div>
     <div style="font-size: 18px;margin-bottom: 10px">课程资料</div>
-    <div v-if="scoreData.price === 0">
+    <div v-if="scoreData.price === 0 || flag">
       <video :src ="scoreData.video" v-if="scoreData.type ==='VIDEO'"controls style="width: 65%;height: 400px"></video>
       <div style="margin-top: 10px">资料链接：<a :href="scoreData.file" target="_blank">{{scoreData.file}}</a></div>
     </div>
     <div e-else>
-      <span style="color: #dd2121;margin-right: 20px">该课程为付费课程，购买后可解锁</span>
-      <el-button type="warning" size="mini">购买课程</el-button>
+      <span style="color: #dd2121;margin-right: 20px">该课程需要积分，兑换后可解锁</span>
+      <el-button type="warning" size="mini" @click="exchange">兑换课程</el-button>
     </div>
   </div>
 <!--  课程介绍区域-->
@@ -33,6 +33,7 @@
 
 <script>
 import E from 'wangeditor'
+import {post} from "axios";
 export default {
   data() {
     let scoreId=this.$route.query.id
@@ -40,14 +41,48 @@ export default {
     return{
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
       scoreId:scoreId,
-      scoreData:{}
+      scoreData:{},
+      flag:false
     }
   },
   mounted() {
     this.loadScore()
-
+    this.checkOrder()
   },
   methods: {
+    checkOrder(){
+      this.$request.get('/scoreorder/selectAll',{
+        params:{
+          userId:this.user.id,
+          scoreId:this.scoreId
+        }
+      }).then(res=>{
+        if (res.code==='200'){
+          if (res.data.length>0){
+            this.flag=true
+          }
+        }else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
+    exchange(){
+      let data={
+        scoreId:this.scoreId,
+        score:this.scoreData.price,
+        userId:this.user.id
+      }
+        this.$request.post('/scoreorder/add',data).then(res=>{
+          if (res.code ==='200'){
+            this.$message.success('兑换成功')
+            this.loadScore()
+            this.checkOrder()
+          }else {
+            this.$message.error(res.msg)
+          }
+        })
+
+    },
     loadScore(){
       this.$request.get('/score/selectById/'+this.scoreId).then(res=>{
         if (res.code ==='200'){

@@ -27,6 +27,7 @@ const routes = [
       { path: 'score', name: 'Score', meta: { name: '积分专区' }, component: () => import('../views/manager/Score') },
       { path: 'information', name: 'Information', meta: { name: '资料审核' }, component: () => import('../views/manager/Information') },
       { path: 'orders', name: 'Orders', meta: { name: '课程订单' }, component: () => import('../views/manager/Orders') },
+      { path: 'scoreOrder', name: 'ScoreOrder', meta: { name: '积分兑课' }, component: () => import('../views/manager/ScoreOrder') },
     ]
   },
   {

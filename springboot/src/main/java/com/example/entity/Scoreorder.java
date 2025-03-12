@@ -6,19 +6,6 @@ import java.io.Serializable;
  * 公告信息表
 */
 public class Scoreorder implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    /** ID */
-    private Integer id;
-    /** 标题 */
-    private String title;
-    /** 内容 */
-    private String content;
-    /** 创建时间 */
-    private String time;
-    /** 创建人 */
-    private String user;
-
     public Integer getId() {
         return id;
     }
@@ -27,20 +14,28 @@ public class Scoreorder implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public Integer getScoreId() {
+        return scoreId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setScoreId(Integer scoreId) {
+        this.scoreId = scoreId;
     }
 
-    public String getContent() {
-        return content;
+    public Integer getScore() {
+        return score;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public String getTime() {
@@ -51,12 +46,46 @@ public class Scoreorder implements Serializable {
         this.time = time;
     }
 
-    public String getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
+
+    public String getScoreImg() {
+        return scoreImg;
+    }
+
+    public void setScoreImg(String scoreImg) {
+        this.scoreImg = scoreImg;
+    }
+
+    public String getScoreName() {
+        return scoreName;
+    }
+
+    public void setScoreName(String scoreName) {
+        this.scoreName = scoreName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    private Integer id;
+   private Integer scoreId;
+   private Integer score;
+   private String orderId;
+   private String time;
+   private Integer userId;
+   private String scoreImg;
+   private String scoreName;
+   private String userName;
 
 }

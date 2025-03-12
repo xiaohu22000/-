@@ -1,9 +1,14 @@
 package com.example.service;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.example.entity.Account;
 import com.example.entity.Score;
 import com.example.entity.Score;
+import com.example.entity.Scoreorder;
 import com.example.mapper.ScoreMapper;
+import com.example.mapper.ScoreorderMapper;
+import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -20,6 +25,9 @@ public class ScoreService {
 
     @Resource
     private ScoreMapper scoreMapper;
+
+    @Resource
+    private ScoreorderMapper scoreorderMapper;
 
     /**
      * 新增
@@ -56,7 +64,18 @@ public class ScoreService {
      * 根据ID查询
      */
     public Score selectById(Integer id) {
-        return scoreMapper.selectById(id);
+
+        Score score= scoreMapper.selectById(id);
+        //校验当前用户有没有做积分兑换
+        Account currentUser= TokenUtils.getCurrentUser();
+        Scoreorder scoreorder=new Scoreorder();
+        scoreorder.setScoreId(score.getId());
+        scoreorder.setUserId(currentUser.getId());
+        List<Scoreorder> scoreorders=scoreorderMapper.selectAll(scoreorder);
+        if (ObjectUtil.isEmpty(scoreorders)){
+            score.setFile("");
+        }
+        return score;
     }
 
     /**

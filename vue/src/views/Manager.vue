@@ -47,6 +47,7 @@
             <el-menu-item index="/score">积分专区</el-menu-item>
             <el-menu-item index="/information">资料审核</el-menu-item>
             <el-menu-item index="/orders">课程订单</el-menu-item>
+            <el-menu-item index="/scoreOrder">积分兑课</el-menu-item>
           </el-submenu>
 
           <el-submenu index="user">
