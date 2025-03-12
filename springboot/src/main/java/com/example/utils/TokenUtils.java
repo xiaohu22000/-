@@ -33,6 +33,7 @@ public class TokenUtils {
 
     @Resource
     AdminService adminService;
+    @Resource
     UserService userService;
 
     @PostConstruct

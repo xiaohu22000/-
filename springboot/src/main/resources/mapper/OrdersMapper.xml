@@ -9,13 +9,15 @@
     </sql>
 
     <select id="selectAll" resultType="com.example.entity.Orders">
-        select
-        <include refid="Base_Column_List" />
+        select orders.*,course.img as courseImg,course.name as courseName,user.name as userName,course.type as courseType
         from orders
+        left join course on orders.course_id = course.id
+        left join user on orders.user_id = user.id
         <where>
             <if test="id != null"> and id= #{id}</if>
             <if test="orderId != null"> and order_id= #{orderId}</if>
             <if test="userId != null"> and user_id= #{userId}</if>
+            <if test="courseId != null"> and course_id= #{courseId}</if>
         </where>
         order by id desc
     </select>

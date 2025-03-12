@@ -26,6 +26,7 @@ const routes = [
       { path: 'course', name: 'Course', meta: { name: '课程信息' }, component: () => import('../views/manager/Course') },
       { path: 'score', name: 'Score', meta: { name: '积分专区' }, component: () => import('../views/manager/Score') },
       { path: 'information', name: 'Information', meta: { name: '资料审核' }, component: () => import('../views/manager/Information') },
+      { path: 'orders', name: 'Orders', meta: { name: '课程订单' }, component: () => import('../views/manager/Orders') },
     ]
   },
   {
@@ -42,6 +43,7 @@ const routes = [
       { path: 'information', name: 'Information', meta: { name: '海量资源' }, component: () => import('../views/front/Information') },
       { path: 'person', name: 'Person', meta: { name: '个人信息' }, component: () => import('../views/front/Person') },
       { path: 'myinfo', name: 'MyInfo', meta: { name: '我的资料' }, component: () => import('../views/front/MyInfo.vue') },
+      { path: 'orders', name: 'Orders', meta: { name: '已购课程' }, component: () => import('../views/front/Orders') },
     ]
   },
   { path: '/login', name: 'Login', meta: { name: '登录' }, component: () => import('../views/Login.vue') },

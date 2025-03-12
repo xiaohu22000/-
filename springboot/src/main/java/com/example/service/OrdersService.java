@@ -53,10 +53,12 @@ public class OrdersService {
         if (user.getAccount() <price){
             throw new CustomException(ResultCodeEnum.ACCOUNT_LOWER_ERROR);
         }
+        orders.setPrice(price);
         //创建订单记录
         ordersMapper.insert(orders);
         //扣除用于余额
         user.setAccount(user.getAccount()- price);
+        userMapper.updateById(user);
 
     }
 
@@ -87,6 +89,7 @@ public class OrdersService {
      * 根据ID查询
      */
     public Orders selectById(Integer id) {
+
         return ordersMapper.selectById(id);
     }
 

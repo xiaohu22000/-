@@ -14,7 +14,7 @@
 <!--  课程保密区域-->
   <div>
     <div style="font-size: 18px;margin-bottom: 10px">课程资料</div>
-    <div v-if="courseData.price === 0">
+    <div v-if="courseData.price === 0 || flag">
       <video :src ="courseData.video" v-if="courseData.type ==='VIDEO'"controls style="width: 65%;height: 400px"></video>
       <div style="margin-top: 10px">资料链接：<a :href="courseData.file" target="_blank">{{courseData.file}}</a></div>
     </div>
@@ -41,14 +41,31 @@ export default {
     return{
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
       courseId:courseId,
-      courseData:{}
+      courseData:{},
+      flag:false
     }
   },
   mounted() {
     this.loadCourse()
-
+    this.checkCourse()
   },
   methods: {
+    checkCourse(){
+      this.$request.get('/orders/selectAll',{
+        params:{
+          userId: this.user.id,
+          courseId:this.courseId
+        }
+      }).then(res=>{
+        if (res.code === '200'){
+          if (res.data.length >0){
+            this.flag=true
+          }
+        }else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
     loadCourse(){
       this.$request.get('/course/selectById/'+this.courseId).then(res=>{
         if (res.code ==='200'){
@@ -68,6 +85,7 @@ export default {
         if (res.code === '200'){
           this.$message.success('购买成功，已解锁课程')
           this.loadCourse()
+          this.checkCourse()
         }else {
           this.$message.error(res.msg)
         }

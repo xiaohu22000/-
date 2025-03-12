@@ -36,6 +36,9 @@
                 <div style="text-decoration: none" @click="navTo('/front/MyInfo')">我的资料</div>
               </el-dropdown-item>
               <el-dropdown-item>
+                <div style="text-decoration: none" @click="navTo('/front/orders')">已购课程</div>
+              </el-dropdown-item>
+              <el-dropdown-item>
                 <div style="text-decoration: none" @click="navTo('/front/person')">个人中心</div>
               </el-dropdown-item>
               <el-dropdown-item>

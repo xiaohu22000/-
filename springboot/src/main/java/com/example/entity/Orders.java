@@ -65,13 +65,7 @@ public class Orders implements Serializable {
         this.orderId = orderId;
     }
 
-    public String getCourseimg() {
-        return courseimg;
-    }
 
-    public void setCourseimg(String courseimg) {
-        this.courseimg = courseimg;
-    }
 
     public String getCourseName() {
         return courseName;
@@ -81,6 +75,34 @@ public class Orders implements Serializable {
         this.courseName = courseName;
     }
 
-    private String courseimg;
+    public String getCourseImg() {
+        return courseImg;
+    }
+
+    public void setCourseImg(String courseImg) {
+        this.courseImg = courseImg;
+    }
+
+    private String courseImg;
     private String courseName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    private String userName;
+
+    public String getCourseType() {
+        return courseType;
+    }
+
+    public void setCourseType(String courseType) {
+        this.courseType = courseType;
+    }
+
+    private String courseType;
 }

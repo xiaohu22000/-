@@ -1,8 +1,10 @@
 package com.example.service;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.example.entity.Account;
 import com.example.entity.Course;
+import com.example.entity.Orders;
 import com.example.mapper.CourseMapper;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
@@ -22,6 +24,8 @@ public class CourseService {
     @Resource
     private CourseMapper courseMapper;
 
+    @Resource
+    private OrdersService ordersService;
     /**
      * 新增
      */
@@ -57,7 +61,18 @@ public class CourseService {
      * 根据ID查询
      */
     public Course selectById(Integer id) {
-        return courseMapper.selectById(id);
+        Course course= courseMapper.selectById(id);
+        //把敏感数据干掉
+        Account currentUser=TokenUtils.getCurrentUser();
+        Orders orders=new Orders();
+        orders.setUserId(currentUser.getId());
+        orders.setCourseId(id);
+        List <Orders> ordersList=ordersService.selectAll(orders);
+        if (ObjectUtil.isEmpty(ordersList)){
+            course.setFile("");
+            course.setVideo("");
+        }
+        return course;
     }
 
     /**
