@@ -5,7 +5,7 @@
     <span style="font-size: 20px;font-weight: 550;color: #333333;margin-left: 20px">{{informationData.name}}</span>
   </div>
   <div style="text-align: center;margin-top: 15px">
-    <span style="color: #dd2121" v-if="informationData.price>0">{{informationData.price }} /积分</span>
+    <span style="color: #dd2121" v-if="informationData.score> 0 ">{{informationData.score }} /积分</span>
     <span style="color: #12b127" v-else>免费白嫖</span>
     <span style="color: #666666;margin-left: 50px">发布时间：{{informationData.time}}</span>
   </div>
@@ -17,7 +17,7 @@
     </div>
     <div e-else>
       <span style="color: #dd2121;margin-right: 20px">该课程需要积分，兑换后可解锁</span>
-      <el-button type="warning" size="mini">兑换课程</el-button>
+      <el-button type="warning" size="mini" @click="exchange">兑换课程</el-button>
     </div>
   </div>
 <!--  课程介绍区域-->
@@ -46,6 +46,20 @@ export default {
 
   },
   methods: {
+    exchange(){
+      let data={
+        fileId:this.fileId,
+        userId:this.userId,
+        score:this.informationData.score
+      }
+      this.$request.post('/fileorder/add',data).then(res=>{
+        if(res.code ==='200'){
+          this.$message.success('兑换成功')
+        }else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
     loadInformation(){
       this.$request.get('/information/selectById/'+this.informationId).then(res=>{
         if (res.code ==='200'){
