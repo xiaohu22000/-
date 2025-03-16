@@ -1,6 +1,8 @@
 package com.example.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.example.common.Result;
+import com.example.entity.Orders;
 import com.example.entity.User;
 import com.example.service.UserService;
 import com.github.pagehelper.PageInfo;
@@ -8,7 +10,11 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
@@ -71,5 +77,24 @@ public class UserController {
     public Result recharge(@RequestParam Double account){
         userService.recharge(account);
         return Result.success();
+    }
+    @GetMapping("/getPie")
+    public Result getPie(){
+        Map<String,Object> resultMap=new HashMap<>();
+        List<Map<String,Object>> list=new ArrayList<>();
+        List<User> userList= userService.selectAll(new User());
+        Map<String,Long> collect=userList.stream().filter(x-> ObjectUtil.isNotEmpty(x.getMember()))
+                .collect(Collectors.groupingBy(User::getMember,Collectors.counting()));
+        for (String key :collect.keySet()) {
+            Map<String,Object>map=new HashMap<>();
+            map.put("name",key);
+            map.put("value",collect.get(key));
+            list.add(map);
+        }
+        resultMap.put("text","平台会员用户占比统计图");
+        resultMap.put("subText","统计维度：是否为会员身份");
+        resultMap.put("name","占比数据");
+        resultMap.put("data",list);
+        return Result.success(resultMap);
     }
 }

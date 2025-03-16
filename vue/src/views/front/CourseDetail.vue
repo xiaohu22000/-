@@ -28,6 +28,47 @@
     <div style="font-size: 18px">课程介绍</div>
     <div style="margin-top: 10px" v-html="courseData.content" class="w-e-text w-e-text-container"></div>
   </div>
+  <div style="margin-top: 50px;font-size: 18px">欢迎发表评论</div>
+  <div style="margin-top: 20px">
+    <el-input type="textarea" :row="5" v-model="content"></el-input>
+  </div>
+  <div style="margin-top: 10px;text-align: right">
+    <el-button type="primary" @click="submit(content,0)">提交</el-button>
+  </div>
+  <div style="margin-top: 30px;margin-bottom: 500px">
+    <el-row v-for="item in commmentData" style="margin-bottom: 30px">
+      <el-col :span="4">
+        <div style="display: flex;align-items: center">
+          <img :src="item.userAvatar" alt="" style="width: 50px;border-radius: 50%">
+          <div style="flex: 1;margin-left: 10px">{{item.userName}}</div>
+        </div>
+      </el-col>
+      <el-col :span="20">
+        <div style="height: 50px;line-height: 50px">
+          <el-row>
+            <el-col :span="18" style="white-space:nowrap;overflow: hidden;text-overflow:ellipsis;">{{item.content}}</el-col>
+            <el-col :span="6" style="text-align:right">{{item.time}}</el-col>
+          </el-row>
+        </div>
+        <div v-for="child in item.children" style="margin-bottom: 5px">
+          <el-row>
+            <el-col :span="5">
+              <div style="display: flex;align-items: center">
+                <img :src="child.userAvatar" alt="" style="width: 50px;height: 50px;border-radius: 50%">
+                <div style="flex: 1;margin-left: 10px">{{child.userName}}</div>
+              </div>
+            </el-col>
+            <el-col :span="13" style="height: 50px;line-height: 50px;white-space: nowrap;overflow: hidden;text-overflow:ellipsis;">{{child.content}}</el-col>
+            <el-col :span="6" style="height: 50px;line-height: 50px;text-align: right">{{child.time}}</el-col>
+          </el-row>
+        </div>
+      <div style="margin-top: 20px">
+        <el-input style="width: 400px" v-model="item.tmp"></el-input>
+        <el-button type="primary" style="margin-left: 5px" @click="submit(item.tmp,item.id)">回复</el-button>
+      </div>
+      </el-col>
+    </el-row>
+  </div>
 </div>
 </div>
 </template>
@@ -42,12 +83,15 @@ export default {
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
       courseId:courseId,
       courseData:{},
-      flag:false
+      flag:false,
+      content:null,
+      commmentData:[]
     }
   },
   mounted() {
     this.loadCourse()
     this.checkCourse()
+    this.loadComment()
   },
   methods: {
     checkCourse(){
@@ -91,7 +135,38 @@ export default {
         }
       })
     },
-
+    submit(content,parentId){
+      let data={
+        userId:this.user.id,
+        courseId:this.courseId,
+        content:content,
+        parentId:parentId
+      }
+      this.$request.post('/comment/add',data).then(res=>{
+        if (res.code==='200'){
+          this.$message.success('评论成功')
+          this.content=null
+          this.loadComment()
+        }
+        else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
+    loadComment(){
+      this.$request.get('/comment/selectAll',{
+        params:{
+          courseId:this.courseId
+        }
+      }).then(res=>{
+        if (res.code==='200'){
+          this.commmentData=res.data
+        }
+        else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
 }}
 </script>
 

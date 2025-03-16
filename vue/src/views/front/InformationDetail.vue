@@ -12,7 +12,7 @@
 <!--  课程保密区域-->
   <div>
     <div style="font-size: 18px;margin-bottom: 10px">课程资料</div>
-    <div v-if="informationData.score === 0">
+    <div v-if="informationData.score === 0 || flag">
       <div style="margin-top: 10px">资料链接：<a :href="informationData.file" target="_blank">{{informationData.file}}</a></div>
     </div>
     <div e-else>
@@ -38,23 +38,42 @@ export default {
     return{
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
       informationId:informationId,
-      informationData:{}
+      informationData:{},
+      flag:false
     }
   },
   mounted() {
     this.loadInformation()
-
+    this.check()
   },
   methods: {
+    check(){
+      this.$request.get('/fileorder/selectAll',{
+        params:{
+          userId:this.user.id,
+          fileId:this.informationId
+        }
+      }).then(res=>{
+        if (res.code ==='200'){
+          if (res.data.length>0){
+            this.flag=true
+          }else {
+            this.$message.error(res.msg)
+          }
+        }
+      })
+    },
     exchange(){
       let data={
-        fileId:this.fileId,
-        userId:this.userId,
+        fileId:this.informationId,
+        userId:this.user.id,
         score:this.informationData.score
       }
       this.$request.post('/fileorder/add',data).then(res=>{
         if(res.code ==='200'){
           this.$message.success('兑换成功')
+          this.loadInformation()
+          this.check()
         }else {
           this.$message.error(res.msg)
         }

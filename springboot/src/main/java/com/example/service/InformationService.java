@@ -1,8 +1,11 @@
 package com.example.service;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import com.example.entity.Account;
+import com.example.entity.Fileorder;
 import com.example.entity.Information;
+import com.example.mapper.FileorderMapper;
 import com.example.mapper.InformationMapper;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
@@ -22,6 +25,8 @@ public class InformationService {
     @Resource
     private InformationMapper informationMapper;
 
+    @Resource
+    private FileorderMapper fileorderMapper;
     /**
      * 新增
      */
@@ -57,7 +62,17 @@ public class InformationService {
      * 根据ID查询
      */
     public Information selectById(Integer id) {
-        return informationMapper.selectById(id);
+        Information information=informationMapper.selectById(id);
+        Account currentUser=TokenUtils.getCurrentUser();
+        Fileorder fileorder=new Fileorder();
+        fileorder.setUserId(currentUser.getId());
+        fileorder.setFileId(information.getId());
+
+        List<Fileorder> fileorders= fileorderMapper.selectAll(fileorder);
+        if (CollectionUtil.isEmpty(fileorders)){
+            information.setFile("");
+        }
+        return information;
     }
 
     /**

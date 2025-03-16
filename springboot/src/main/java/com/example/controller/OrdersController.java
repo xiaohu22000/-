@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.example.common.Result;
 import com.example.entity.Orders;
 import com.example.service.OrdersService;
@@ -7,7 +8,11 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 公告信息表前端操作接口
@@ -84,4 +89,23 @@ public class OrdersController {
         return Result.success(page);
     }
 
+    @GetMapping("/getPie")
+    public Result getPie(){
+        Map<String,Object> resultMap=new HashMap<>();
+        List<Map<String,Object>> list=new ArrayList<>();
+        List<Orders> orderList= ordersService.selectAll(new Orders());
+        Map<String,Double> collect=orderList.stream().filter(x-> ObjectUtil.isNotEmpty(x.getCourseType()))
+                .collect(Collectors.groupingBy(Orders::getCourseType,Collectors.reducing(0.0,Orders::getPrice,Double::sum)));
+        for (String key :collect.keySet()) {
+            Map<String,Object>map=new HashMap<>();
+            map.put("name","VIDEO".equals(key) ?"视频课程":"图文课程");
+            map.put("value",collect.get(key));
+            list.add(map);
+        }
+        resultMap.put("text","平台课程收益统计图");
+        resultMap.put("subText","统计维度：课程分类");
+        resultMap.put("name","占比数据");
+        resultMap.put("data",list);
+        return Result.success(resultMap);
+    }
 }

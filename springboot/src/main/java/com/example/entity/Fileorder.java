@@ -55,13 +55,7 @@ public class Fileorder implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getFileImg() {
-        return fileImg;
-    }
 
-    public void setFileImg(Integer fileImg) {
-        this.fileImg = fileImg;
-    }
 
     public String getFileName() {
         return fileName;
@@ -78,6 +72,13 @@ public class Fileorder implements Serializable {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+    public String getFileImg() {
+        return fileImg;
+    }
+
+    public void setFileImg(String fileImg) {
+        this.fileImg = fileImg;
+    }
 
     private Integer id;
     private Integer fileId;
@@ -86,7 +87,8 @@ public class Fileorder implements Serializable {
     private String time;
     private Integer userId;
 
-    private Integer fileImg;
+
+    private String fileImg;
     private String fileName;
     private String userName;
 }

@@ -68,7 +68,7 @@ public class CourseService {
         orders.setUserId(currentUser.getId());
         orders.setCourseId(id);
         List <Orders> ordersList=ordersService.selectAll(orders);
-        if (ObjectUtil.isEmpty(ordersList)){
+        if (ObjectUtil.isEmpty(ordersList) && 0 !=course.getPrice()){
             course.setFile("");
             course.setVideo("");
         }

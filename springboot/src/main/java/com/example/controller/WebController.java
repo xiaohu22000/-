@@ -5,12 +5,16 @@ import cn.hutool.core.util.StrUtil;
 import com.example.common.Result;
 import com.example.common.enums.ResultCodeEnum;
 import com.example.common.enums.RoleEnum;
-import com.example.entity.Account;
-import com.example.service.AdminService;
-import com.example.service.UserService;
+import com.example.entity.*;
+import com.example.service.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 基础前端接口
@@ -22,6 +26,13 @@ public class WebController {
     private AdminService adminService;
     @Resource
     private UserService userService;
+
+    @Resource
+    private CourseService courseService;
+    @Resource
+    private ScoreService scoreService;
+    @Resource
+    private InformationService informationService;
 
     @GetMapping("/")
     public Result hello() {
@@ -80,4 +91,27 @@ public class WebController {
         return Result.success();
     }
 
+    @GetMapping("/getBar")
+    public Result getbar(){
+        Map<String,Object> resultMap=new HashMap<>();
+        List<String> xlist=new ArrayList<>();
+        List<Long> ylist=new ArrayList<>();
+
+        xlist.add("视频课程");
+        xlist.add("图文课程");
+        xlist.add("积分兑换课程课程");
+        xlist.add("下载课程");
+
+        List<Course> courses= courseService.selectAll(new Course());
+        ylist.add(courses.stream().filter(x ->"VIDEO".equals(x.getType())).count());
+        ylist.add(courses.stream().filter(x ->"TEXT".equals(x.getType())).count());
+        ylist.add((long)scoreService.selectAll(new Score()).size());
+        ylist.add((long)informationService.selectAll(new Information()).size());
+
+        resultMap.put("text","平台所有资料总数统计(柱状图)");
+        resultMap.put("subText","统计维度：是否为会员身份");
+        resultMap.put("xAxix",xlist);
+        resultMap.put("yAxix",ylist);
+        return Result.success(resultMap);
+    }
 }
